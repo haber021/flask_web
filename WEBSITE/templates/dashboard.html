@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+    <a class="btn btn-primary" href="{{ url_for('auth.hom') }}">
+      <i class="bi bi-box-arrow-left"></i>
+    </a>
+  <h2>Dashboard Content</h2>
+
+  <!-- Folium Map Container -->
+  <div id="map-container" style="height: 500px;"></div>
+
+  <!-- Folium Script -->
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"></script>
+  <script src="https://unpkg.com/folium@0.12.1/dist/leaflet.folium.js"></script>
+  <script src="https://unpkg.com/leaflet-extrude-markers@1.0.2/dist/leaflet-extrude-markers.js"></script>
+
+  <script>
+    // Get initial location from Flask
+    var initialLocation = {{ initial_location | tojson }};
+
+    // Initialize Folium Map with a satellite tile layer
+    var map = L.map('map-container').setView([initialLocation.lat, initialLocation.lon], 15);
+
+    // Add a satellite tile layer
+    L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+      attribution: 'Google Satellite',
+      subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+    }).addTo(map);
+
+    // Add Folium Marker with extrusion
+    L.ExtrudeMarkers.FeatureGroup().addTo(map);
+    L.ExtrudeMarkers.marker([initialLocation.lat, initialLocation.lon], {
+      popup: 'Your specified location',
+      extrude: 50  // Adjust the extrusion height as needed
+    }).addTo(map);
+
+    // Add a red polyline
+    var polyline = L.polyline([[initialLocation.lat, initialLocation.lon], [YOUR_DESTINATION_LAT, YOUR_DESTINATION_LON]], { color: 'red' }).addTo(map);
+
+  </script>
+
+  <div>
+    <img src="{{ google_static_map_url }}" alt="Static Map">
+  </div>
+
+
+
+{% endblock %}
+

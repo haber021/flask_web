@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Update Prompt{% endblock %}
+
+{% block content %}
+  <div class="container mt-5">
+    <h3>Update Existing Data?</h3>
+    <p>Data with the same Name, Position, and Age already exists.</p>
+    <p>Do you want to update the existing data or cancel the upload?</p>
+
+    <form method="POST" action="{{ url_for('auth.update_finish', id=existing_data.id) }}">
+      <button type="submit" class="btn btn-primary">Update Data</button>
+      <input type="submit" value="Update">
+    </form>
+
+    <form method="post" action="{{ url_for('auth.hom') }}">
+      <input type="submit" value="Cancel">
+  </form>
+{% endblock %}

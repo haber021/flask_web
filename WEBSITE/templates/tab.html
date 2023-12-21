@@ -1,0 +1,43 @@
+{% extends "base.html" %} 
+{% block title %}Table Dataset{% endblock %}
+
+{% block content %}
+
+  <div class="container mt-5">
+    <h3 class="text-center mb-4">Employee Data</h3>
+
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
+          <tr>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Office</th>
+            <th>Age</th>
+            <th>Starting Date</th>
+            <th>Salary</th>
+            <th>label</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for data in test_data %}
+            <tr>
+              <td>{{ data.name }}</td>
+              <td>{{ data.position }}</td>
+              <td>{{ data.office }}</td>
+              <td>{{ data.age }}</td>
+              <td>{{ data.start_date }}</td>
+              <td>{{ data.salary }}</td>
+              <td>{{ data.label }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <a class="btn btn-primary mt-4" href="{{ url_for('auth.hom') }}">
+      <i class="bi bi-box-arrow-left"></i> Go Back
+    </a>
+  </div>
+
+{% endblock %}
